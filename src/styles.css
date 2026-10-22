@@ -461,19 +461,29 @@ details summary {
 .score {
   font-size: 26px;
   font-weight: 800;
-  min-width: 56px;
+  min-width: 44px;
   text-align: right;
   color: var(--accent-dark);
 }
 .combo {
-  min-width: 48px;
-  font-size: 16px;
+  min-width: 0;
+  font-size: 14px;
   font-weight: 800;
+  white-space: nowrap;
+}
+.dots.many .dot {
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+}
+.dots.many {
+  gap: 3px;
 }
 .float {
   position: absolute;
-  right: 60px;
-  top: 0;
+  right: 8px;
+  top: -30px;
+  white-space: nowrap;
   font-weight: 800;
   color: var(--ok);
   font-size: 22px;
@@ -589,10 +599,12 @@ details summary {
   height: 100%;
   display: block;
 }
-.card,
-.zone {
+.card {
   min-width: 0;
   overflow: hidden;
+}
+.zone {
+  min-width: 0;
 }
 .zone .card-art {
   max-width: 120px;
@@ -680,12 +692,22 @@ details summary {
   transform: scale(1.06);
 }
 .zone .chip {
-  position: static;
-  font-size: 14px;
-  padding: 4px 8px;
-  box-shadow: none;
+  position: absolute;
+  left: 50%;
+  bottom: -14px;
+  transform: translateX(-50%);
+  max-width: 130%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  min-height: 0;
+  font-size: 13px;
+  padding: 5px 10px;
+  box-shadow: var(--shadow);
   background: var(--ok);
   color: #fff;
+  z-index: 2;
 }
 .chips {
   width: 100%;
@@ -758,6 +780,24 @@ details summary {
 .tile.used {
   opacity: 0.15;
   pointer-events: none;
+}
+/* 7+ harfli sözcükler tek satıra sığsın */
+.slots.long {
+  gap: 4px;
+}
+.slots.long .slot {
+  width: 32px;
+  height: 42px;
+  font-size: 22px;
+  border-radius: 9px;
+}
+.tiles.long {
+  gap: 7px;
+}
+.tiles.long .tile {
+  width: 48px;
+  height: 54px;
+  font-size: 24px;
 }
 
 /* Kaydırma */
@@ -1117,6 +1157,22 @@ details summary {
 .mic.rec {
   animation: recPulse 0.8s ease-in-out infinite;
   background: #ff3b3b;
+}
+/* Henüz basılmadıysa yavaşça nefes alır: "bana bas" ipucu */
+.mic.idle {
+  animation: breathe 1.6s ease-in-out infinite;
+}
+.cave-ctrls {
+  position: relative;
+}
+.mic-hint {
+  position: absolute;
+  left: 50%;
+  bottom: -46px;
+  transform: translateX(-50%);
+  font-size: 34px;
+  pointer-events: none;
+  animation: bounce 0.5s ease infinite alternate;
 }
 .btn-round.stamp {
   background: var(--ok);

@@ -29,14 +29,20 @@ export const echo: Game = async (ctx) => {
     const text = h("div", "chunk-text", chunk.en);
     const row = h("div", "prompt-row");
     row.append(speakerButton(chunk.en));
-    const micBtn = h("button", "mic", mic ? "🎤" : "🗣️");
+    const micBtn = h("button", "mic idle", mic ? "🎤" : "🗣️");
     micBtn.type = "button";
     micBtn.oncontextmenu = (e) => e.preventDefault();
+    // İlk dokunuşa kadar "bas" ipucu: nefes alan mikrofon + zıplayan parmak
+    const hint = h("div", "mic-hint", "👆");
+    micBtn.addEventListener("pointerdown", () => {
+      micBtn.classList.remove("idle");
+      hint.remove();
+    }, { once: true });
     const playBtn = h("button", "btn-round play hidden", "▶️");
     const okBtn = h("button", "btn-round stamp hidden", "✔️");
     playBtn.type = okBtn.type = "button";
     const ctrls = h("div", "cave-ctrls");
-    ctrls.append(playBtn, micBtn, okBtn);
+    ctrls.append(playBtn, micBtn, okBtn, hint);
     wrap.append(text, row, ctrls);
     ctx.root.append(wrap);
     await speak(chunk.en);

@@ -4,7 +4,7 @@ Kaynak: tymm.meb.gov.tr ünite sayfaları. Üretim: JSON dosyalarından. (Türk�
 
 | Tema | Sözcük | Kalıp | Sosyal ifade | Fonetik | Performans |
 |---|---|---|---|---|---|
-| 1. School Life (Okul Hayatı) | 41 | 14 | 15 | a, b | Günlük sayfası |
+| 1. School Life (Okul Hayatı) | 41 | 16 | 15 | a, b | Günlük sayfası |
 | 2. Classroom Life (Sınıf Hayatı) | 54 | 12 | 15 | c, d | Resimli sözlük: Sınıf Hayatı |
 | 3. Personal Life (Kişisel Hayat) | 56 | 10 | 10 | e, i, f, g, h, j | Kendimi tanıtıyorum projesi |
 | 4. Family Life (Aile Hayatı) | 48 | 8 | 9 | o, k, l, m, n, p | Aile Hayatı projesi / aile ağacı |
@@ -27,7 +27,9 @@ Sayfa: https://tymm.meb.gov.tr/ingilizce-dersi-temel-egitim/unite/765
 
 - How are you? — Nasılsın? (L, S)
 - I'm good, thanks! — İyiyim, teşekkürler! (S)
-- Good evening! / Good afternoon! / Good night! — İyi akşamlar / İyi günler / İyi geceler (L, S)
+- Good evening! — İyi akşamlar! (L, S)
+- Good afternoon! — İyi günler! (L, S)
+- Good night! — İyi geceler! (L, S)
 - Who's this? — Bu kim? (L, S)
 - This is Mr. Blue. — Bu Bay Blue. (R, W)
 - Where is Daphne? She's in the library. — Daphne nerede? Kütüphanede. (L, R)

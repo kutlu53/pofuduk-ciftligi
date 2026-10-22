@@ -130,8 +130,7 @@ export const trace: Game = async (ctx) => {
           sfx.ok();
           board.classList.add("ok", "pop");
           ctx.answer(word, true, Number.MAX_SAFE_INTEGER, "spell");
-          void speakWord(word);
-          setTimeout(resolve, 1000);
+          void Promise.all([speakWord(word), wait(1000)]).then(() => resolve());
         }
       };
       canvas.addEventListener("pointerdown", (e) => {

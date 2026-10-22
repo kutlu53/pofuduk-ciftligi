@@ -1,5 +1,5 @@
 import type { Game } from "./types";
-import { gameHeader, h, pickFor, shuffle } from "./common";
+import { gameHeader, h, pickFor, shuffle, wait } from "./common";
 import { sfx, speakWord } from "../core/audio";
 import { artSvg } from "../art";
 
@@ -74,9 +74,9 @@ export const dragMatch: Game = async (ctx) => {
             chip.classList.add("done");
             z.classList.add("ok", "pop");
             z.append(chip);
-            void speakWord(word);
+            const said = speakWord(word);
             matched++;
-            if (matched === words.length) setTimeout(resolve, 800);
+            if (matched === words.length) void Promise.all([said, wait(800)]).then(() => resolve());
             return;
           }
           sfx.no();

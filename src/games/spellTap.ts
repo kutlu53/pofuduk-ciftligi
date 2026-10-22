@@ -1,5 +1,5 @@
 import type { Game } from "./types";
-import { gameHeader, h, pickFor, shuffle, speakerButton } from "./common";
+import { gameHeader, h, pickFor, shuffle, speakerButton, wait } from "./common";
 import { spellingOf } from "../core/content";
 import { sfx, speakWord } from "../core/audio";
 import { artSvg } from "../art";
@@ -16,10 +16,11 @@ export const spellTap: Game = async (ctx) => {
     const wrap = h("div", "game");
     const top = h("div", "prompt-row");
     top.append(gameHeader("🔤"), h("div", "big-art", artSvg(word)), speakerButton(word));
-    const slots = h("div", "slots");
+    const long = letters.length > 6 ? " long" : "";
+    const slots = h("div", "slots" + long);
     const slotEls = letters.map(() => h("span", "slot"));
     slots.append(...slotEls);
-    const tray = h("div", "tiles");
+    const tray = h("div", "tiles" + long);
     const tileEls = tiles.map((l) => {
       const t = h("button", "tile", l);
       t.type = "button";
@@ -47,8 +48,7 @@ export const spellTap: Game = async (ctx) => {
               sfx.ok();
               slots.classList.add("ok");
               ctx.answer(word, !mistake, performance.now() - t0, "spell");
-              void speakWord(word);
-              setTimeout(resolve, 1000);
+              void Promise.all([speakWord(word), wait(1000)]).then(() => resolve());
             }
           } else {
             mistake = true;

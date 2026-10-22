@@ -41,6 +41,7 @@ export const listenTap: Game = async (ctx) => {
       mark(cards[options.indexOf(target)], true);
     }
     ctx.answer(target, ok, rt, "listen");
-    await wait(ok ? 650 : 1100);
+    // Yanlışta doğru kart gösterilirken sözcük bir kez daha söylenir; ses bitmeden geçilmez.
+    await (ok ? wait(650) : Promise.all([wait(400).then(() => speakWord(target)), wait(1100)]));
   }
 };

@@ -97,6 +97,7 @@ function makeRound(boss: boolean): Screen {
 
     const renderDots = (activeIdx: number, total: number) => {
       dots.innerHTML = "";
+      dots.classList.toggle("many", total > 6);
       for (let i = 0; i < total; i++) {
         const d = h("span", "dot" + (i < activeIdx ? " done" : i === activeIdx ? " active" : ""));
         d.textContent = i < queue.length ? GAME_ICONS[queue[i].kind] : i === total - 1 && !boss ? GAME_ICONS.echo : "🔁";
@@ -234,8 +235,10 @@ function makeRound(boss: boolean): Screen {
       clearMod();
       i++;
       if (!boss && i === SCORED_PER_ROUND && missed.size > 0) {
-        // Yanlış cevaplananlar aynı turun sonunda bir kez daha sorulur.
-        const review = [...missed.values()].slice(0, 3);
+        // Yanlış cevaplananlar aynı turun sonunda bir kez daha sorulur; en son görülen en sona.
+        const review = [...missed.values()]
+          .sort((a, b) => (getProgress(a.id)?.lastSeen ?? 0) - (getProgress(b.id)?.lastSeen ?? 0))
+          .slice(0, 3);
         const kind: GameKind = review.every((w) => w.modes.includes("listen")) ? "listenTap" : "readTap";
         queue.push({ kind, targets: review });
       }

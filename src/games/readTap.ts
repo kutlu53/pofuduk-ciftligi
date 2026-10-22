@@ -34,7 +34,7 @@ export const readTap: Game = async (ctx) => {
       mark(cards[options.indexOf(target)], true);
     }
     ctx.answer(target, ok, rt, "read");
-    void speakWord(target);
-    await wait(ok ? 800 : 1200);
+    // Sözcük söylenirken ekran değişmesin.
+    await Promise.all([speakWord(target), wait(ok ? 800 : 1200)]);
   }
 };

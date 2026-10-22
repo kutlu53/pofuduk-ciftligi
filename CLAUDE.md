@@ -131,6 +131,13 @@ npm run art        # tools/apply_art.py: art tariflerini JSON'lara yaz
 npm run smoke      # başsız Chrome ile uçtan uca duman testi (önce build + preview)
 npm run shots -- <klasör>   # 5 ekran boyutunda görüntü + taşma raporu
 npm run sheet -- <klasör>   # 6 temanın illüstrasyon sayfaları (PNG)
+node tools/play.mjs <klasör> [url] [tur]   # "çocuk gibi oyna": ses/efekt/çizim zaman kaydı + her adımda görüntü
+node tools/play_report.mjs <klasör>/timeline.json   # ses gecikmesi, seçenek/tekrar uyarıları
+```
+Çocuk-gözü denetimi (2026-10-23) bulguları ve düzeltmeleri: sözcük sesi bitmeden ekran geçmesin (tüm oyunlar `await speakWord`),
+dinlemede yanlışta sözcük tekrar söylenir, puan uçuşu skorun üstüne binmesin, 7+ nokta HUD'da küçülür, sürüklemede etiket kutunun
+altına oturur, uzun sözcükte harf kutuları küçülür, mikrofon ilk basışa kadar nefes alır + 👆, tekrar oyununda en son görülen sözcük sona,
+"okul hemşiresi" rozeti 🩹 ve kütüphaneci oda sahnesi (benzer kişi kartları ayrışsın).
 ```
 ```
 src/art/index.ts       artSvg(word): sözcük illüstrasyonu (SVG); DRAW kayıt defteri elle çizimler

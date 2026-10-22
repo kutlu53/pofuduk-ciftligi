@@ -13,8 +13,8 @@
   ],
   "words": [
     {"id": "classmate", "en": "a classmate", "tr": "sınıf arkadaşı", "cat": "people", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "🧑‍🤝‍🧑", "asset": {"img": null, "audio": null}, "art": {"kind": "group", "e": ["👦", "👧"]}},
-    {"id": "librarian", "en": "a librarian", "tr": "kütüphaneci", "cat": "people", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "📚", "asset": {"img": null, "audio": null}, "art": {"kind": "combo", "main": "🧑", "badge": "📚"}},
-    {"id": "school_nurse", "en": "a school nurse", "tr": "okul hemşiresi", "cat": "people", "modes": ["listen", "read", "match", "say"], "emoji": "🩺", "asset": {"img": null, "audio": null}, "art": {"kind": "combo", "main": "🧑‍⚕️", "badge": "🏫"}},
+    {"id": "librarian", "en": "a librarian", "tr": "kütüphaneci", "cat": "people", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "📚", "asset": {"img": null, "audio": null}, "art": {"kind": "room", "items": ["🧑", "📚", "📚"]}},
+    {"id": "school_nurse", "en": "a school nurse", "tr": "okul hemşiresi", "cat": "people", "modes": ["listen", "read", "match", "say"], "emoji": "🩺", "asset": {"img": null, "audio": null}, "art": {"kind": "combo", "main": "🧑‍⚕️", "badge": "🩹"}},
     {"id": "headteacher", "en": "a headteacher", "tr": "okul müdürü", "cat": "people", "modes": ["listen", "read", "match", "say"], "emoji": "🧑‍💼", "asset": {"img": null, "audio": null}, "art": {"kind": "combo", "main": "🧑‍💼", "badge": "🏫"}},
     {"id": "caretaker", "en": "a caretaker", "tr": "hizmetli", "cat": "people", "modes": ["listen", "read", "match", "say"], "emoji": "🧹", "asset": {"img": null, "audio": null}, "art": {"kind": "combo", "main": "🧑‍🔧", "badge": "🧹"}},
 
@@ -61,7 +61,9 @@
   "chunks": [
     {"id": "c01", "en": "How are you?", "tr": "Nasılsın?", "skills": ["L", "S"]},
     {"id": "c02", "en": "I'm good, thanks!", "tr": "İyiyim, teşekkürler!", "skills": ["S"]},
-    {"id": "c03", "en": "Good evening! Good afternoon! Good night!", "tr": "İyi akşamlar / İyi günler / İyi geceler", "skills": ["L", "S"]},
+    {"id": "c03a", "en": "Good evening!", "tr": "İyi akşamlar!", "skills": ["L", "S"]},
+    {"id": "c03b", "en": "Good afternoon!", "tr": "İyi günler!", "skills": ["L", "S"]},
+    {"id": "c03c", "en": "Good night!", "tr": "İyi geceler!", "skills": ["L", "S"]},
     {"id": "c04", "en": "Who's this?", "tr": "Bu kim?", "skills": ["L", "S"]},
     {"id": "c05", "en": "This is Mr. Blue.", "tr": "Bu Bay Blue.", "skills": ["R", "W"]},
     {"id": "c06", "en": "Where is Daphne? She's in the library.", "tr": "Daphne nerede? Kütüphanede.", "skills": ["L", "R"]},

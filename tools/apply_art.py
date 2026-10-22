@@ -50,8 +50,8 @@ MONTHS = ["january", "february", "march", "april", "may", "june", "july", "augus
 ART = {
     # ---- Tema 1 ----
     "classmate": group(["👦", "👧"]),
-    "librarian": combo("🧑", "📚"),
-    "school_nurse": combo("🧑‍⚕️", "🏫"),
+    "librarian": room("🧑", "📚", "📚"),
+    "school_nurse": combo("🧑‍⚕️", "🩹"),
     "headteacher": combo("🧑‍💼", "🏫"),
     "caretaker": combo("🧑‍🔧", "🧹"),
     "art_room": room("🎨", "🖼️"),

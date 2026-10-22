@@ -77,14 +77,16 @@ export const swipe: Game = async (ctx) => {
     ctx.answer(word, ok, rt, "read");
 
     if (ok) {
-      void speakWord(word);
-      await wait(700);
+      await Promise.all([speakWord(word), wait(700)]);
     } else {
       await wait(450);
+      // Doğru hâli göster: uyumlu kart + ✅ tarafı yanar
+      left.classList.remove("lit", "no");
+      right.classList.remove("lit", "no");
+      right.classList.add("lit", "ok");
       card.className = "swipe-card ok pop";
       card.innerHTML = `<span class="card-art">${artSvg(word)}</span><span class="swipe-word">${word.en}</span>`;
-      void speakWord(word);
-      await wait(1100);
+      await Promise.all([speakWord(word), wait(1100)]);
     }
   }
 };

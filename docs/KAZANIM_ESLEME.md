@@ -40,7 +40,7 @@ Aşağıdaki sayılar `chunks[].skills` etiketlerinden türetilmiştir (`python 
 <!-- kazanim:start -->
 | Tema | Kalıp | L | R | S | W | G |
 |---|---|---|---|---|---|---|
-| theme1 School Life | 14 | 9 | 9 | 7 | 2 | 3 |
+| theme1 School Life | 16 | 11 | 9 | 9 | 2 | 3 |
 | theme2 Classroom Life | 12 | 10 | 9 | 6 | 3 | 1 |
 | theme3 Personal Life | 10 | 8 | 8 | 3 | 4 | 2 |
 | theme4 Family Life | 8 | 6 | 6 | 3 | 4 | 3 |
