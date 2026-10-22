@@ -110,6 +110,7 @@ await sleep(1500);
 check("tur ekranı açıldı", await exists(".round .stage .game"));
 const firstIcon = await evaluate("document.querySelector('.game-icon')?.textContent");
 console.log("     ilk mikro oyun:", firstIcon);
+const seenKinds = new Set();
 
 // Her mikro oyunda ilk doğru/yanlış cevabı otomatik ver, 6 oyun boyunca ilerle.
 for (let step = 0; step < 60; step++) {
@@ -122,6 +123,15 @@ for (let step = 0; step < 60; step++) {
       return 'spell';
     }
     if (document.querySelector('.swipe-btns .yes-btn')) { document.querySelector('.swipe-btns .yes-btn').click(); return 'swipe'; }
+    if (document.querySelector('.trace-canvas') && !document.querySelector('.trace-board.ok')) {
+      // Tüm tuvali zikzak boya: kapsama eşiği aşılır.
+      const c = document.querySelector('.trace-canvas'); const r = c.getBoundingClientRect();
+      const o = (x,y) => ({bubbles:true, clientX:r.left+x, clientY:r.top+y, pointerId:1});
+      c.dispatchEvent(new PointerEvent('pointerdown', o(2, 2)));
+      for (let y = 2; y < r.height; y += 8) { c.dispatchEvent(new PointerEvent('pointermove', o(2, y))); c.dispatchEvent(new PointerEvent('pointermove', o(r.width-2, y))); }
+      c.dispatchEvent(new PointerEvent('pointerup', o(r.width-2, r.height-2)));
+      return 'trace';
+    }
     if (document.querySelector('.chip:not(.done)')) {
       const chip = document.querySelector('.chip:not(.done)');
       const zone = document.querySelector('.zone[data-id="' + chip.dataset.id + '"]');
@@ -140,7 +150,9 @@ for (let step = 0; step < 60; step++) {
     }
     return 'wait';
   })()`);
-  if (step % 10 === 0) console.log("     adım", step, state, await evaluate("document.querySelector('.game-icon')?.textContent ?? ''"));
+  const icon = await evaluate("document.querySelector('.game-icon')?.textContent ?? ''");
+  if (icon) seenKinds.add(icon);
+  if (step % 10 === 0) console.log("     adım", step, state, icon);
   if (state === "summary") break;
   if (state === "mic") {
     await sleep(600);
@@ -148,7 +160,8 @@ for (let step = 0; step < 60; step++) {
   }
   await sleep(state === "wait" ? 600 : 1300);
 }
-check("tur özeti ekranı", await exists(".summary"), "puan: " + (await evaluate("document.querySelector('.big-score')?.textContent")));
+check("tur özeti ekranı", await exists(".summary"), "puan: " + (await evaluate("document.querySelector('.big-score')?.textContent")) + " · oyunlar: " + [...seenKinds].join(" "));
+if (URL_.includes("dev=all")) check("çiz oyunu oynandı (dev=all)", seenKinds.has("✍️"));
 await sleep(4500);
 check("özet düğmeleri göründü", await evaluate("!document.querySelector('.summary-btns')?.classList.contains('hidden')"));
 await click(".summary-btns .btn-big:not(.play)");

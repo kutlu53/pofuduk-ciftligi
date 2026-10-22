@@ -66,6 +66,8 @@ export interface WordProgress {
 export interface Profile {
   name: string;
   avatar: string;
+  /** İlk oyun günü (YYYY-MM-DD); haftalık açılan oyun türleri buna göre. */
+  firstDay: string;
   /** Çocuğun kendi ortalama tepki süresi (ms, üstel ortalama). 0 = henüz yok. */
   avgRt: number;
   bestScore: number;
@@ -95,4 +97,6 @@ export interface SaveData {
   echoStamps: string[];
   /** Seçili ada / tema kimliği. */
   currentTheme: string;
+  /** Açılışı kutlanmış oyun türleri. */
+  unlockedShown: string[];
 }

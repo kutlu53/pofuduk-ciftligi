@@ -2,6 +2,7 @@ import "./styles.css";
 import { registerSW } from "virtual:pwa-register";
 import { load, save } from "./core/store";
 import { unlockAudio } from "./core/audio";
+import { dev } from "./core/round";
 import { go } from "./ui/router";
 import { home } from "./ui/home";
 import { onboarding } from "./ui/onboarding";
@@ -24,7 +25,9 @@ document.addEventListener(
 );
 
 void (async () => {
-  const sheetId = new URLSearchParams(location.search).get("sheet");
+  const params = new URLSearchParams(location.search);
+  if (params.get("dev") === "all") dev.allGames = true;
+  const sheetId = params.get("sheet");
   if (sheetId) {
     const { sheet } = await import("./ui/sheet");
     go(sheet(sheetId));

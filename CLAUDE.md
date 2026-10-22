@@ -84,7 +84,10 @@ phonics[], performance{title_tr, steps_tr[]}, outcome_tags[]
 ## 7. Yapılacaklar (sıra)
 1. Hedef sınıfı doğrula (2/3/4) — AÇIK.
 2. ~~Tema 1 için dikey dilim: 6 mikro oyun (MVP), 1 ada, pofuduk koleksiyonu, ilerleme kaydı.~~ YAPILDI (2026-10-22, bkz. §10).
-   Eksik kalanlar: hikâye parçaları, değiştiriciler (🐇🔦🧊), ada patronu, haftalık açılan oyun türleri, çiz (trace) mikro oyunu.
+   2026-10-22 eklendi: çiz ✍️ (harf izleme, `src/games/trace.ts`; kapsama ≥%70, hız bonusu yok), haftalık açılan türler
+   (`UNLOCKS` in `core/round.ts`: çiz 7. günde; ana ekranda bir kez kutlanır), değiştiriciler (`ui/round.ts`: 2. turdan itibaren %50
+   olasılıkla tek oyuna; 🐇 7 sn içinde doğru → +5, 🔦 el feneri maskesi, 🧊 kartlar kıpırdar). `?dev=all` tüm türleri açar ve değiştiriciyi zorlar.
+   Eksik kalanlar: hikâye parçaları, ada patronu.
 3. ~~Ses/görsel varlık hattı.~~ Ses: TTS (KARAR). Görsel: SVG illüstrasyon sistemi (KARAR, 2026-10-22). PNG ikonlar: `node tools/icons.mjs`.
 4. ~~Tema 2-6 içerik girişi.~~ YAPILDI (2026-10-22). Uygulama çok temalı: ada seçimi `save.currentTheme`, kilit `isUnlocked()`.
    Varlıklar (görsel/ses) hâlâ eksik; emoji + TTS ile oynanıyor.
@@ -103,7 +106,12 @@ phonics[], performance{title_tr, steps_tr[]}, outcome_tags[]
 - TYMM İngilizce 3. sınıf ünite sayfaları (yukarıda), program kılavuzu PDF.
 - Çalışma örneği (yapı şablonu): Signal projesi CLAUDE.md (lise 9-12) — ayrı proje, bu dosyayla karışmasın.
 
-## 10. Kod yapısı ve çalıştırma (MVP, Tema 1)
+## 10. Depo ve yayın
+- GitHub: https://github.com/kutlu53/pofuduk-ciftligi (public; Pages ücretsiz planda public ister)
+- Canlı: https://kutlu53.github.io/pofuduk-ciftligi/ — `main`'e her push `.github/workflows/deploy.yml` ile derleyip yayınlar (~1 dk).
+- Commit mesajları Türkçe, sonunda `Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>`.
+
+## 11. Kod yapısı ve çalıştırma
 ```
 npm run dev        # geliştirme sunucusu
 npm run build      # tsc --noEmit + vite build → dist/ (PWA, sw.js dahil)

@@ -4,6 +4,7 @@ import { h } from "../games/common";
 import { THEME_ICONS, themes } from "../core/content";
 import { isUnlocked, knownRatio, persist, playBlock, ROUNDS_PER_SESSION, save } from "../core/store";
 import { sfx } from "../core/audio";
+import { availableKinds, GAME_ICONS, UNLOCKS } from "../core/round";
 import { collection } from "./collection";
 import { roundScreen } from "./round";
 import { rest } from "./rest";
@@ -72,6 +73,21 @@ export const home: Screen = (root) => {
 
   wrap.append(top, map, bar);
   root.append(wrap);
+
+  // Yeni açılan oyun türünü bir kez kutla.
+  const fresh = availableKinds(p.firstDay).filter((k) => UNLOCKS.some((u) => u.kind === k) && !save.unlockedShown.includes(k));
+  if (fresh.length) {
+    const k = fresh[0];
+    save.unlockedShown.push(k);
+    void persist();
+    const t = h("div", "toast unlock", `<div class="unlock-card"><span>🎁</span><b>${GAME_ICONS[k]}</b></div>`);
+    wrap.append(t);
+    sfx.win();
+    setTimeout(() => {
+      t.classList.add("fade");
+      setTimeout(() => t.remove(), 300);
+    }, 1800);
+  }
 
   function startRound(): void {
     if (playBlock()) {

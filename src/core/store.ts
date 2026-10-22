@@ -33,7 +33,14 @@ function defaultSave(): SaveData {
     week: { key: weekKey(), knownAtStart: 0 },
     echoStamps: [],
     currentTheme: "theme1",
+    unlockedShown: [],
   };
+}
+
+/** Eski kayıtlara yeni alanları ekler. */
+function migrate(): void {
+  if (save.profile && !save.profile.firstDay) save.profile.firstDay = todayKey();
+  if (!Array.isArray(save.unlockedShown)) save.unlockedShown = [];
 }
 
 /** Seçili tema; kayıt bozuksa ilk temaya düşer. */
@@ -65,6 +72,7 @@ export async function load(): Promise<void> {
   } catch (e) {
     console.warn("load failed", e);
   }
+  migrate();
   rollDay();
   rollWeek();
 }

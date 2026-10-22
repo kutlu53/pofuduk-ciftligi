@@ -2,7 +2,7 @@ import type { Screen } from "./router";
 import { go } from "./router";
 import { home } from "./home";
 import { h } from "../games/common";
-import { persist, save } from "../core/store";
+import { persist, save, todayKey } from "../core/store";
 import { sfx } from "../core/audio";
 
 const AVATARS = ["🦊", "🐼", "🐸", "🦄", "🐧", "🐯", "🐨", "🐙"];
@@ -35,7 +35,7 @@ export const onboarding: Screen = (root) => {
   play.onclick = async () => {
     if (!chosen) return;
     sfx.win();
-    save.profile = { name: name.value.trim(), avatar: chosen, avgRt: 0, bestScore: 0, rounds: 0, emotions: [] };
+    save.profile = { name: name.value.trim(), avatar: chosen, firstDay: todayKey(), avgRt: 0, bestScore: 0, rounds: 0, emotions: [] };
     await persist();
     go(home);
   };
