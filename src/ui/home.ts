@@ -2,11 +2,11 @@ import type { Screen } from "./router";
 import { go } from "./router";
 import { h } from "../games/common";
 import { THEME_ICONS, themes } from "../core/content";
-import { isUnlocked, knownRatio, persist, playBlock, ROUNDS_PER_SESSION, save } from "../core/store";
+import { bossReady, isUnlocked, knownRatio, persist, playBlock, ROUNDS_PER_SESSION, save } from "../core/store";
 import { sfx } from "../core/audio";
 import { availableKinds, GAME_ICONS, UNLOCKS } from "../core/round";
 import { collection } from "./collection";
-import { roundScreen } from "./round";
+import { bossScreen, roundScreen } from "./round";
 import { rest } from "./rest";
 import { parent } from "./parent";
 import { pofudukSvg } from "./pofuduk";
@@ -34,19 +34,23 @@ export const home: Screen = (root) => {
     const unlocked = isUnlocked(i);
     if (unlocked) {
       const ratio = knownRatio(theme.id);
+      const boss = bossReady(theme.id);
+      const beaten = save.bosses.includes(theme.id);
       isl.classList.add("open");
       if (theme.id === save.currentTheme) isl.classList.add("current");
+      if (boss) isl.classList.add("boss");
       isl.style.setProperty("--p", `${Math.round(ratio * 100)}%`);
-      isl.innerHTML = `<div class="ring"><span class="island-icon">${THEME_ICONS[i]}</span></div>`;
+      isl.innerHTML = `<div class="ring"><span class="island-icon">${THEME_ICONS[i]}</span>${boss ? '<span class="boss-badge">👑</span>' : beaten ? '<span class="boss-badge done">👑</span>' : ""}</div>`;
       isl.onclick = async () => {
         sfx.pop();
         if (save.currentTheme !== theme.id) {
           save.currentTheme = theme.id;
           islands.forEach((el) => el.classList.toggle("current", el === isl));
           await persist();
-          return;
+          if (!boss) return;
         }
-        startRound();
+        if (boss) startBoss();
+        else startRound();
       };
     } else {
       isl.classList.add("locked");
@@ -97,6 +101,16 @@ export const home: Screen = (root) => {
     sfx.pop();
     if (save.day.roundsInSession >= ROUNDS_PER_SESSION) go(rest);
     else go(roundScreen);
+  }
+
+  function startBoss(): void {
+    if (playBlock()) {
+      sfx.squeak();
+      return;
+    }
+    sfx.win();
+    if (save.day.roundsInSession >= ROUNDS_PER_SESSION) go(rest);
+    else go(bossScreen);
   }
 };
 

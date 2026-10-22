@@ -1,7 +1,7 @@
 import type { Mode, Stage, Theme, Word } from "../core/types";
 import { getProgress } from "../core/store";
 import { stageOf } from "../core/srs";
-import { sfx, speak } from "../core/audio";
+import { sfx, speak, speakWord } from "../core/audio";
 import { artSvg } from "../art";
 
 export function h<K extends keyof HTMLElementTagNameMap>(tag: K, cls = "", html = ""): HTMLElementTagNameMap[K] {
@@ -51,7 +51,8 @@ export function emojiCard(w: Word): HTMLButtonElement {
   return b;
 }
 
-export function speakerButton(text: string): HTMLButtonElement {
+/** 🔊 düğmesi: metin (TTS) veya sözcük (varsa ses dosyası, yoksa TTS). */
+export function speakerButton(what: string | Word): HTMLButtonElement {
   const b = h("button", "speaker", "🔊");
   b.type = "button";
   b.onclick = () => {
@@ -59,7 +60,7 @@ export function speakerButton(text: string): HTMLButtonElement {
     b.classList.remove("pulse");
     void b.offsetWidth;
     b.classList.add("pulse");
-    void speak(text);
+    void (typeof what === "string" ? speak(what) : speakWord(what));
   };
   return b;
 }

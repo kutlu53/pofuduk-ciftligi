@@ -2,6 +2,8 @@
  * Ses: sözcük seslendirme için tarayıcı TTS (geçici; stüdyo kaydı gelince
  * asset.audio kullanılacak), efektler için WebAudio.
  */
+import type { Word } from "./types";
+
 let ctx: AudioContext | null = null;
 let voice: SpeechSynthesisVoice | null = null;
 
@@ -61,6 +63,35 @@ export function speak(text: string, rate = 0.9): Promise<void> {
 
 export function stopSpeaking(): void {
   if ("speechSynthesis" in window) speechSynthesis.cancel();
+  current?.pause();
+  current = null;
+}
+
+let current: HTMLAudioElement | null = null;
+
+/** Sözcüğü seslendirir: gerçek ses dosyası varsa (asset.audio) onu çalar, yoksa TTS. */
+export function speakWord(w: Word): Promise<void> {
+  const url = w.asset?.audio;
+  if (!url) return speak(w.en);
+  stopSpeaking();
+  return new Promise((resolve) => {
+    const a = new Audio(url);
+    current = a;
+    let done = false;
+    const finish = () => {
+      if (done) return;
+      done = true;
+      if (current === a) current = null;
+      resolve();
+    };
+    a.onended = finish;
+    a.onerror = () => {
+      finish();
+      void speak(w.en); // dosya çalınamazsa TTS'e düş
+    };
+    setTimeout(finish, 6000);
+    a.play().catch(() => a.onerror?.(new Event("error")));
+  });
 }
 
 function tone(freq: number, dur: number, type: OscillatorType = "sine", gain = 0.18, delay = 0, slideTo?: number): void {

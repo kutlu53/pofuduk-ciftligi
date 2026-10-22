@@ -1,5 +1,6 @@
 // Ekran görüntüleri: telefon / tablet (dikey, yatay) / PC boyutlarında her ekranı yakalar, taşmayı ölçer.
 // Kullanım: npm run build && npx vite preview --port 4173 &  → node tools/shots.mjs <çıktı klasörü> [url]
+//   url'de ?dev=all varsa hikâye ve ada patronu ekranları da yakalanır.
 import { spawn } from "node:child_process";
 import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -7,6 +8,7 @@ import { join } from "node:path";
 
 const OUT = process.argv[2] ?? "shots";
 const URL_ = process.argv[3] ?? "http://localhost:4173/";
+const DEV = URL_.includes("dev=all");
 const CHROME = process.env.CHROME ?? "C:/Program Files/Google/Chrome/Application/chrome.exe";
 const VIEWPORTS = [
   { name: "phone", w: 390, h: 844, mobile: true },
@@ -18,6 +20,44 @@ const VIEWPORTS = [
 mkdirSync(OUT, { recursive: true });
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const report = [];
+
+const PLAY_STEP = `(() => {
+  if (document.querySelector('.summary')) return 'summary';
+  if (document.querySelector('.grid4 .card')) {
+    const target = document.querySelector('.game')?.dataset.target;
+    (document.querySelector('.grid4 .card[data-id="' + target + '"]') ?? document.querySelector('.grid4 .card')).click(); return 'tap';
+  }
+  if (document.querySelector('.tile:not(.used)')) { for (const t of document.querySelectorAll('.tile:not(.used)')) { t.click(); if (t.classList.contains('used')) break; } return 'spell'; }
+  if (document.querySelector('.swipe-btns .yes-btn')) {
+    const truly = document.querySelector('.game')?.dataset.truly === '1';
+    document.querySelector(truly ? '.swipe-btns .yes-btn' : '.swipe-btns .no-btn').click(); return 'swipe';
+  }
+  if (document.querySelector('.trace-canvas') && !document.querySelector('.trace-board.ok')) {
+    const c = document.querySelector('.trace-canvas'); const r = c.getBoundingClientRect();
+    const o = (x,y) => ({bubbles:true, clientX:r.left+x, clientY:r.top+y, pointerId:1});
+    c.dispatchEvent(new PointerEvent('pointerdown', o(2, 2)));
+    for (let y = 2; y < r.height; y += 8) { c.dispatchEvent(new PointerEvent('pointermove', o(2, y))); c.dispatchEvent(new PointerEvent('pointermove', o(r.width-2, y))); }
+    c.dispatchEvent(new PointerEvent('pointerup', o(r.width-2, r.height-2)));
+    return 'trace';
+  }
+  if (document.querySelector('.chip:not(.done)')) {
+    const chip = document.querySelector('.chip:not(.done)');
+    const zone = document.querySelector('.zone[data-id="' + chip.dataset.id + '"]');
+    const r = zone.getBoundingClientRect(); const c = chip.getBoundingClientRect();
+    const o = (x,y) => ({bubbles:true, clientX:x, clientY:y, pointerId:1});
+    chip.dispatchEvent(new PointerEvent('pointerdown', o(c.x+5, c.y+5)));
+    chip.dispatchEvent(new PointerEvent('pointermove', o(r.x+r.width/2, r.y+r.height/2)));
+    chip.dispatchEvent(new PointerEvent('pointerup', o(r.x+r.width/2, r.y+r.height/2)));
+    return 'drag';
+  }
+  if (document.querySelector('.cave')) {
+    const ok = document.querySelector('.btn-round.stamp');
+    if (ok && !ok.classList.contains('hidden')) { ok.click(); return 'stamp'; }
+    const mic = document.querySelector('.mic');
+    if (mic) { mic.click(); mic.dispatchEvent(new PointerEvent('pointerdown',{bubbles:true,pointerId:1})); return 'mic'; }
+  }
+  return 'wait';
+})()`;
 
 for (const vp of VIEWPORTS) {
   const port = 9400 + VIEWPORTS.indexOf(vp);
@@ -47,12 +87,40 @@ for (const vp of VIEWPORTS) {
   const send = (method, params = {}) => new Promise((resolve) => { const id = nextId++; pending.set(id, resolve); ws.send(JSON.stringify({ id, method, params })); });
   const evaluate = async (expression) => (await send("Runtime.evaluate", { expression, awaitPromise: true, returnByValue: true })).result?.result?.value;
   const click = (sel) => evaluate(`(() => { const el = document.querySelector(${JSON.stringify(sel)}); if (!el) return false; el.dispatchEvent(new PointerEvent("pointerdown",{bubbles:true})); el.click(); return true; })()`);
+  const exists = (sel) => evaluate(`!!document.querySelector(${JSON.stringify(sel)})`);
   const shot = async (name) => {
     const r = await send("Page.captureScreenshot", { format: "png" });
     writeFileSync(join(OUT, `${vp.name}--${name}.png`), Buffer.from(r.result.data, "base64"));
     const m = await evaluate(`({ sh: document.documentElement.scrollHeight, ih: innerHeight, sw: document.documentElement.scrollWidth, iw: innerWidth })`);
     const over = m.sh > m.ih + 2 ? `DİKEY TAŞMA ${m.sh - m.ih}px` : m.sw > m.iw + 2 ? `YATAY TAŞMA ${m.sw - m.iw}px` : "ok";
     report.push(`${vp.name.padEnd(17)} ${name.padEnd(16)} ${over}`);
+  };
+  /** Turu oynar; her yeni oyun ikonunda görüntü alır. */
+  const playRound = async (prefix) => {
+    const seen = new Set();
+    for (let step = 0; step < 90; step++) {
+      const icon = await evaluate("document.querySelector('.game-icon')?.textContent ?? ''");
+      if (icon && !seen.has(icon)) {
+        seen.add(icon);
+        await sleep(500);
+        await shot(prefix + icon.codePointAt(0).toString(16));
+      }
+      const state = await evaluate(PLAY_STEP);
+      if (state === "summary") break;
+      if (state === "mic") { await sleep(600); await evaluate(`document.querySelector('.mic')?.dispatchEvent(new PointerEvent('pointerup',{bubbles:true,pointerId:1}))`); }
+      await sleep(state === "wait" ? 600 : 1300);
+    }
+  };
+  const summaryToHome = async (prefix) => {
+    await sleep(4500);
+    await shot(prefix + "summary");
+    await click(".summary-btns .btn-big:not(.play)");
+    await sleep(900);
+    if (await exists(".story")) {
+      await sleep(600);
+      await shot("story");
+      for (let i = 0; i < 6 && (await exists(".story")); i++) { await sleep(1000); await click(".story .btn-big"); await sleep(400); }
+    }
   };
 
   await send("Page.enable");
@@ -68,46 +136,19 @@ for (const vp of VIEWPORTS) {
   await shot("home");
   await click(".bottombar .btn-big.play");
   await sleep(1400);
+  await playRound("game-");
+  await summaryToHome("");
 
-  const seen = new Set();
-  for (let step = 0; step < 70; step++) {
-    const icon = await evaluate("document.querySelector('.game-icon')?.textContent ?? ''");
-    if (icon && !seen.has(icon)) {
-      seen.add(icon);
-      await sleep(500);
-      await shot("game-" + icon.codePointAt(0).toString(16));
-    }
-    const state = await evaluate(`(() => {
-      if (document.querySelector('.summary')) return 'summary';
-      if (document.querySelector('.grid4 .card')) { document.querySelector('.grid4 .card').click(); return 'tap'; }
-      if (document.querySelector('.tile:not(.used)')) { for (const t of document.querySelectorAll('.tile:not(.used)')) { t.click(); if (t.classList.contains('used')) break; } return 'spell'; }
-      if (document.querySelector('.swipe-btns .yes-btn')) { document.querySelector('.swipe-btns .yes-btn').click(); return 'swipe'; }
-      if (document.querySelector('.chip:not(.done)')) {
-        const chip = document.querySelector('.chip:not(.done)');
-        const zone = document.querySelector('.zone[data-id="' + chip.dataset.id + '"]');
-        const r = zone.getBoundingClientRect(); const c = chip.getBoundingClientRect();
-        const o = (x,y) => ({bubbles:true, clientX:x, clientY:y, pointerId:1});
-        chip.dispatchEvent(new PointerEvent('pointerdown', o(c.x+5, c.y+5)));
-        chip.dispatchEvent(new PointerEvent('pointermove', o(r.x+r.width/2, r.y+r.height/2)));
-        chip.dispatchEvent(new PointerEvent('pointerup', o(r.x+r.width/2, r.y+r.height/2)));
-        return 'drag';
-      }
-      if (document.querySelector('.cave')) {
-        const ok = document.querySelector('.btn-round.stamp');
-        if (ok && !ok.classList.contains('hidden')) { ok.click(); return 'stamp'; }
-        const mic = document.querySelector('.mic');
-        if (mic) { mic.click(); mic.dispatchEvent(new PointerEvent('pointerdown',{bubbles:true,pointerId:1})); return 'mic'; }
-      }
-      return 'wait';
-    })()`);
-    if (state === "summary") break;
-    if (state === "mic") { await sleep(600); await evaluate(`document.querySelector('.mic')?.dispatchEvent(new PointerEvent('pointerup',{bubbles:true,pointerId:1}))`); }
-    await sleep(state === "wait" ? 600 : 1300);
+  if (DEV) {
+    await shot("home-boss");
+    await click(".island.boss");
+    await sleep(500);
+    await shot("boss-intro");
+    await sleep(1500);
+    await playRound("boss-");
+    await summaryToHome("boss-");
   }
-  await sleep(4500);
-  await shot("summary");
-  await click(".summary-btns .btn-big:not(.play)");
-  await sleep(600);
+
   await click(".bottombar .icon-btn.big");
   await sleep(600);
   await shot("collection");

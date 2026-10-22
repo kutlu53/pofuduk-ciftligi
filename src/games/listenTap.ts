@@ -1,7 +1,7 @@
 import type { Game } from "./types";
 import type { Word } from "../core/types";
 import { distractors, emojiCard, gameHeader, h, mark, pickFor, shuffle, speakerButton, wait } from "./common";
-import { sfx, speak } from "../core/audio";
+import { sfx, speakWord } from "../core/audio";
 
 /** 👂 Dinle, doğru resme dokun. 3 soru. */
 export const listenTap: Game = async (ctx) => {
@@ -10,8 +10,9 @@ export const listenTap: Game = async (ctx) => {
     const options = shuffle([target, ...distractors(ctx.theme, target, "listen", 3)]);
     ctx.root.innerHTML = "";
     const wrap = h("div", "game");
+    wrap.dataset.target = target.id;
     const top = h("div", "prompt-row");
-    const spk = speakerButton(target.en);
+    const spk = speakerButton(target);
     top.append(gameHeader("👂"), spk);
     const grid = h("div", "grid4");
     const cards = options.map(emojiCard);
@@ -25,7 +26,7 @@ export const listenTap: Game = async (ctx) => {
     });
     spk.classList.add("pulse");
     let answered = false;
-    void speak(target.en).then(() => {
+    void speakWord(target).then(() => {
       if (!answered) t0 = performance.now();
     });
     const choice = await picked;

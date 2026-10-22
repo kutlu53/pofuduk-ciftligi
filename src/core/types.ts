@@ -99,4 +99,23 @@ export interface SaveData {
   currentTheme: string;
   /** Açılışı kutlanmış oyun türleri. */
   unlockedShown: string[];
+  /** Tema başına gösterilen hikâye sayfası sayısı (kalıp sırası). */
+  story: Record<string, number>;
+  /** Patronu geçilen temalar. */
+  bosses: string[];
+  /** Tur günlüğü (en son 200): ebeveyn haftalık özeti için. */
+  log: RoundLog[];
+}
+
+export interface RoundLog {
+  /** YYYY-MM-DD */
+  d: string;
+  theme: string;
+  score: number;
+  stars: number;
+  /** doğruluk 0-1 */
+  acc: number;
+  /** süre (sn) */
+  sec: number;
+  boss?: boolean;
 }

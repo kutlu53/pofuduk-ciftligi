@@ -1,7 +1,7 @@
 import type { Game } from "./types";
 import { gameHeader, h, pickFor, shuffle, speakerButton } from "./common";
 import { spellingOf } from "../core/content";
-import { sfx, speak } from "../core/audio";
+import { sfx, speakWord } from "../core/audio";
 import { artSvg } from "../art";
 
 /** 🔤 Resmi gör, sesi dinle, harfleri sırayla dokunarak diz. 2 sözcük. */
@@ -15,7 +15,7 @@ export const spellTap: Game = async (ctx) => {
     ctx.root.innerHTML = "";
     const wrap = h("div", "game");
     const top = h("div", "prompt-row");
-    top.append(gameHeader("🔤"), h("div", "big-art", artSvg(word)), speakerButton(word.en));
+    top.append(gameHeader("🔤"), h("div", "big-art", artSvg(word)), speakerButton(word));
     const slots = h("div", "slots");
     const slotEls = letters.map(() => h("span", "slot"));
     slots.append(...slotEls);
@@ -28,7 +28,7 @@ export const spellTap: Game = async (ctx) => {
     tray.append(...tileEls);
     wrap.append(top, slots, tray);
     ctx.root.append(wrap);
-    void speak(word.en);
+    void speakWord(word);
 
     const t0 = performance.now();
     let idx = 0;
@@ -47,7 +47,7 @@ export const spellTap: Game = async (ctx) => {
               sfx.ok();
               slots.classList.add("ok");
               ctx.answer(word, !mistake, performance.now() - t0, "spell");
-              void speak(word.en);
+              void speakWord(word);
               setTimeout(resolve, 1000);
             }
           } else {

@@ -1,7 +1,8 @@
 import { get, set, del, keys } from "idb-keyval";
-import type { SaveData, WordProgress, Stage, Theme } from "./types";
+import type { RoundLog, SaveData, WordProgress, Stage, Theme } from "./types";
 import { stageOf } from "./srs";
 import { themes, UNLOCK_RATIO } from "./content";
+import { dev } from "./dev";
 
 const KEY = "pofuduk.save.v1";
 const REC_PREFIX = "pofuduk.rec.";
@@ -34,13 +35,46 @@ function defaultSave(): SaveData {
     echoStamps: [],
     currentTheme: "theme1",
     unlockedShown: [],
+    story: {},
+    bosses: [],
+    log: [],
   };
+}
+
+export function addLog(entry: RoundLog): void {
+  save.log.push(entry);
+  if (save.log.length > 200) save.log.splice(0, save.log.length - 200);
+}
+
+/** Kaydı JSON metni olarak verir (yedek). */
+export function exportSave(): string {
+  return JSON.stringify(save, null, 2);
+}
+
+/** JSON yedeği yükler; sürüm uyuşmazsa hata fırlatır. */
+export async function importSave(text: string): Promise<void> {
+  const data = JSON.parse(text) as Partial<SaveData>;
+  if (data.version !== 1 || typeof data.words !== "object") throw new Error("Geçersiz yedek dosyası");
+  Object.assign(save, defaultSave(), data);
+  migrate();
+  rollDay();
+  rollWeek();
+  await persist();
 }
 
 /** Eski kayıtlara yeni alanları ekler. */
 function migrate(): void {
   if (save.profile && !save.profile.firstDay) save.profile.firstDay = todayKey();
   if (!Array.isArray(save.unlockedShown)) save.unlockedShown = [];
+  if (!save.story || typeof save.story !== "object") save.story = {};
+  if (!Array.isArray(save.bosses)) save.bosses = [];
+  if (!Array.isArray(save.log)) save.log = [];
+}
+
+/** Ada patronu hazır mı: sözcüklerin ≥%70'i Bildim ve patron henüz geçilmemiş. */
+export function bossReady(themeId: string): boolean {
+  if (save.bosses.includes(themeId)) return false;
+  return dev.allGames || knownRatio(themeId) >= UNLOCK_RATIO;
 }
 
 /** Seçili tema; kayıt bozuksa ilk temaya düşer. */
@@ -55,10 +89,10 @@ export function knownRatio(themeId: string): number {
   return (c.known + c.master) / t.words.length;
 }
 
-/** Ada i açık mı? İlk ada her zaman açık; diğerleri bir önceki ada %70'e ulaşınca. */
+/** Ada i açık mı? İlk ada her zaman açık; diğerleri önceki adalar %70'e ulaşıp patronları geçilince. */
 export function isUnlocked(index: number): boolean {
   for (let i = 0; i < index; i++) {
-    if (knownRatio(themes[i].id) < UNLOCK_RATIO) return false;
+    if ((!dev.allGames && knownRatio(themes[i].id) < UNLOCK_RATIO) || !save.bosses.includes(themes[i].id)) return false;
   }
   return index < themes.length;
 }

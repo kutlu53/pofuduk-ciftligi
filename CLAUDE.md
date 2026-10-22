@@ -87,12 +87,22 @@ phonics[], performance{title_tr, steps_tr[]}, outcome_tags[]
    2026-10-22 eklendi: çiz ✍️ (harf izleme, `src/games/trace.ts`; kapsama ≥%70, hız bonusu yok), haftalık açılan türler
    (`UNLOCKS` in `core/round.ts`: çiz 7. günde; ana ekranda bir kez kutlanır), değiştiriciler (`ui/round.ts`: 2. turdan itibaren %50
    olasılıkla tek oyuna; 🐇 7 sn içinde doğru → +5, 🔦 el feneri maskesi, 🧊 kartlar kıpırdar). `?dev=all` tüm türleri açar ve değiştiriciyi zorlar.
-   Eksik kalanlar: hikâye parçaları, ada patronu.
+   Hikâye parçası (`ui/story.ts`): her 5 normal turda bir özetten sonra 3 sayfa; pofuduk temanın kalıplarını sırayla söyler
+   (`save.story[themeId]` sıra), metinde geçen sözcüğün illüstrasyonu eşlik eder. Puansız.
+   Ada patronu (`ui/round.ts` makeRound(true)): ada %70'e ulaşınca 👑 rozeti; 5 hızlı oyun (🐇 hepsinde), Yankı yok, doğruluk ≥%75 → `save.bosses`.
+   KARAR: sonraki ada = önceki ada %70 **ve** patron geçildi. Patron kaybedilince tekrar denenebilir, ceza yok.
+   Duman testi (`tools/smoke.mjs`) `?dev=all` ile hikâye + patron + 2. ada açılışını da doğrular; oyunlar hedefi `data-target`/`data-truly` ile açıklar (test için).
+   TAMAM: §3'teki çeşitlilik katmanlarının tümü kodda.
 3. ~~Ses/görsel varlık hattı.~~ Ses: TTS (KARAR). Görsel: SVG illüstrasyon sistemi (KARAR, 2026-10-22). PNG ikonlar: `node tools/icons.mjs`.
 4. ~~Tema 2-6 içerik girişi.~~ YAPILDI (2026-10-22). Uygulama çok temalı: ada seçimi `save.currentTheme`, kilit `isUnlocked()`.
    Varlıklar (görsel/ses) hâlâ eksik; emoji + TTS ile oynanıyor.
 5. Pilot: 8-10 çocukla gözlem; ölçümler: tur tamamlama, tekrar oynama, sözcük durumu geçişleri, aralıklı tekrar etkisi.
-6. Ebeveyn paneli (okunur ilerleme raporu, Türkçe).
+6. ~~Ebeveyn paneli.~~ YAPILDI (2026-10-22): rapor, haftalık özet (`save.log`, son 200 tur), tema tablosu (patron durumu),
+   sözcük listesi (durum, doğru/toplam, tekrar tarihi), Yankı kayıtlarını dinleme, JSON yedek indir/geri yükle (`exportSave`/`importSave`),
+   süre sınırı, sıfırlama. Ses kayıtları yedeğe dahil değil.
+7. Belgeler: `docs/OYUN_TASARIMI.md` (uygulanmış mekanikler), `docs/KAZANIM_ESLEME.md` (kod ailesi düzeyinde; tam kazanım ifadeleri AÇIK,
+   tema tablosu `python tools/kazanim.py` ile üretilir).
+8. Ses dosyası desteği: `speakWord(w)` → `asset.audio` varsa dosyayı çalar, yoksa TTS. Koleksiyonda dokununca büyük görsel penceresi.
 
 ## 8. Açık sorular
 - Hedef sınıf (2, 3 veya 4)? Varsayım: 3. sınıf.

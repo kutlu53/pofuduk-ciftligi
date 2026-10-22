@@ -1,6 +1,6 @@
 import type { Game } from "./types";
 import { gameHeader, h, pickFor, shuffle } from "./common";
-import { sfx, speak } from "../core/audio";
+import { sfx, speakWord } from "../core/audio";
 import { artSvg } from "../art";
 
 function zoneAt(x: number, y: number): HTMLElement | undefined {
@@ -74,7 +74,7 @@ export const dragMatch: Game = async (ctx) => {
             chip.classList.add("done");
             z.classList.add("ok", "pop");
             z.append(chip);
-            void speak(word.en);
+            void speakWord(word);
             matched++;
             if (matched === words.length) setTimeout(resolve, 800);
             return;

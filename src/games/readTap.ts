@@ -1,7 +1,7 @@
 import type { Game } from "./types";
 import type { Word } from "../core/types";
 import { distractors, emojiCard, gameHeader, h, mark, pickFor, shuffle, wait } from "./common";
-import { sfx, speak } from "../core/audio";
+import { sfx, speakWord } from "../core/audio";
 
 /** 👀 Sözcüğü oku, doğru resme dokun. 3 soru. Ses yok; cevaptan sonra sözcük seslendirilir. */
 export const readTap: Game = async (ctx) => {
@@ -11,6 +11,7 @@ export const readTap: Game = async (ctx) => {
     const options = shuffle([target, ...distractors(ctx.theme, target, "listen", 3)]);
     ctx.root.innerHTML = "";
     const wrap = h("div", "game");
+    wrap.dataset.target = target.id;
     const top = h("div", "prompt-row");
     top.append(gameHeader("👀"), h("div", "word-prompt", target.en));
     const grid = h("div", "grid4");
@@ -33,7 +34,7 @@ export const readTap: Game = async (ctx) => {
       mark(cards[options.indexOf(target)], true);
     }
     ctx.answer(target, ok, rt, "read");
-    void speak(target.en);
+    void speakWord(target);
     await wait(ok ? 800 : 1200);
   }
 };

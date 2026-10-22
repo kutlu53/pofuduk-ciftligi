@@ -1,6 +1,6 @@
 import type { Game } from "./types";
 import { distractors, gameHeader, h, pickFor, wait } from "./common";
-import { sfx, speak } from "../core/audio";
+import { sfx, speakWord } from "../core/audio";
 import { artSvg } from "../art";
 
 /** ↔️ Resim ile sözcük uyuyor mu? Sağa kaydır ✅, sola kaydır ❌. 4 kart. */
@@ -13,6 +13,7 @@ export const swipe: Game = async (ctx) => {
 
     ctx.root.innerHTML = "";
     const wrap = h("div", "game");
+    wrap.dataset.truly = truly ? "1" : "0";
     wrap.append(gameHeader("↔️"));
     const area = h("div", "swipe-area");
     const card = h("div", "swipe-card");
@@ -76,13 +77,13 @@ export const swipe: Game = async (ctx) => {
     ctx.answer(word, ok, rt, "read");
 
     if (ok) {
-      void speak(word.en);
+      void speakWord(word);
       await wait(700);
     } else {
       await wait(450);
       card.className = "swipe-card ok pop";
       card.innerHTML = `<span class="card-art">${artSvg(word)}</span><span class="swipe-word">${word.en}</span>`;
-      void speak(word.en);
+      void speakWord(word);
       await wait(1100);
     }
   }

@@ -19,8 +19,8 @@ const BASE_KINDS: GameKind[] = ["listenTap", "readTap", "dragMatch", "spellTap",
 /** Haftalık açılan türler: ilk oyun gününden kaç gün sonra. */
 export const UNLOCKS: { kind: GameKind; day: number }[] = [{ kind: "trace", day: 7 }];
 
-/** Geliştirici anahtarı (?dev=all): tüm oyun türleri açık ve her tur hepsi oynanır. */
-export const dev = { allGames: false };
+import { dev } from "./dev";
+export { dev };
 
 export const SCORED_PER_ROUND = 5;
 export const TARGETS_PER_ROUND = 6;

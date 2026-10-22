@@ -5,8 +5,9 @@ import { h } from "../games/common";
 import { THEME_ICONS, themes } from "../core/content";
 import { currentTheme, getProgress, isUnlocked, persist, save, stageCounts } from "../core/store";
 import { stageOf } from "../core/srs";
-import { sfx, speak } from "../core/audio";
+import { sfx, speakWord } from "../core/audio";
 import { pofudukSvg } from "./pofuduk";
+import { artSvg } from "../art";
 import type { Stage } from "../core/types";
 
 const ORDER: Record<Stage, number> = { master: 0, known: 1, familiar: 2, new: 3 };
@@ -63,7 +64,12 @@ export const collection: Screen = (root) => {
         return;
       }
       sfx.squeak();
-      void speak(w.en);
+      void speakWord(w);
+      // Büyük görsel penceresi; dokununca kapanır.
+      const modal = h("div", "modal");
+      modal.innerHTML = `<div class="modal-card"><div class="modal-art">${artSvg(w)}</div><div class="modal-word">${w.en}</div></div>`;
+      modal.onclick = () => modal.remove();
+      wrap.append(modal);
     };
     grid.append(card);
   }

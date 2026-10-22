@@ -46,6 +46,7 @@ body {
   padding: 16px;
   gap: 16px;
   min-height: 100dvh;
+  overflow-x: clip; /* kıpırdayan kartlar ve uçan kartlar yatay kaydırma yaratmasın */
 }
 
 button {
@@ -277,6 +278,82 @@ button:active {
 }
 .report.themes td {
   padding: 3px 8px 3px 0;
+}
+.report.words {
+  border-collapse: collapse;
+  font-size: 13px;
+  width: 100%;
+  margin-top: 6px;
+}
+.report.words th,
+.report.words td {
+  text-align: left;
+  padding: 2px 6px 2px 0;
+  border-bottom: 1px solid #f1ebe0;
+}
+details summary {
+  cursor: pointer;
+  font-weight: 700;
+  padding: 6px 0;
+}
+.rec-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 6px;
+}
+.rec-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+}
+.btn.mini {
+  padding: 6px 14px;
+  font-size: 16px;
+  margin: 0;
+}
+
+/* Koleksiyon büyük görsel */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: grid;
+  place-items: center;
+  z-index: 20;
+  animation: fadeIn 0.2s;
+}
+.modal-card {
+  background: var(--card);
+  border-radius: 28px;
+  padding: 18px 24px 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+  animation: popIn 0.35s cubic-bezier(0.2, 1.4, 0.5, 1);
+}
+.modal-art {
+  width: min(70vw, 300px);
+  height: min(70vw, 300px);
+}
+.modal-art svg {
+  width: 100%;
+  height: 100%;
+}
+.modal-word {
+  font-size: 30px;
+  font-weight: 800;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 .bottombar {
   width: 100%;
@@ -888,6 +965,123 @@ button:active {
   }
 }
 
+/* Ada patronu */
+.boss-badge {
+  position: absolute;
+  top: -10px;
+  right: -6px;
+  font-size: 34px;
+  animation: bounce 0.6s ease infinite alternate;
+  filter: drop-shadow(0 3px 4px rgba(0, 0, 0, 0.25));
+}
+.boss-badge.done {
+  animation: none;
+  font-size: 26px;
+  opacity: 0.9;
+}
+.ring {
+  position: relative;
+}
+.boss-intro {
+  position: absolute;
+  inset: 0;
+  z-index: 7;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: radial-gradient(circle, #fff3c4, #ffd166);
+  border-radius: var(--radius);
+  animation: popIn 0.4s cubic-bezier(0.2, 1.4, 0.5, 1);
+}
+.boss-intro.fade {
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.boss-crown {
+  font-size: 96px;
+  animation: bounce 0.5s ease infinite alternate;
+}
+.boss-island {
+  font-size: 64px;
+}
+.round.boss .hud {
+  background: linear-gradient(90deg, #fff3c4, transparent 40%, transparent 60%, #fff3c4);
+  border-radius: 999px;
+}
+.boss-result {
+  font-size: 96px;
+  animation: popIn 0.5s cubic-bezier(0.2, 1.4, 0.5, 1);
+}
+.boss-result.won {
+  filter: drop-shadow(0 0 18px #ffd23f);
+}
+
+/* Hikâye parçası */
+.story {
+  justify-content: center;
+  background: linear-gradient(#e8f4ff, var(--bg));
+}
+.story-dots {
+  display: flex;
+  gap: 6px;
+}
+.story-page {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+.story-art {
+  width: 200px;
+  height: 200px;
+  animation: popIn 0.4s cubic-bezier(0.2, 1.4, 0.5, 1);
+}
+.story-art svg {
+  width: 100%;
+  height: 100%;
+}
+.story-emoji {
+  display: grid;
+  place-items: center;
+  font-size: 120px;
+}
+.story-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  width: 100%;
+}
+.story-mascot {
+  width: 96px;
+  height: 96px;
+  flex: none;
+}
+.story-mascot svg {
+  width: 100%;
+  height: 100%;
+  animation: breathe 2.4s ease-in-out infinite;
+}
+.bubble {
+  flex: 1;
+  background: var(--card);
+  border-radius: 22px 22px 22px 6px;
+  padding: 14px 18px;
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1.3;
+  box-shadow: var(--shadow);
+  animation: slideIn 0.3s ease-out;
+}
+.story-ctrls {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  margin-top: 8px;
+}
+
 /* Yankı Mağarası */
 .cave {
   background: radial-gradient(circle at 50% 30%, #4b3b6b, #2a2340 70%);
@@ -1327,6 +1521,17 @@ button:active {
   .trace-board {
     height: 140px;
   }
+  .story-art {
+    width: 120px;
+    height: 120px;
+  }
+  .bubble {
+    font-size: 20px;
+  }
+  .story-mascot {
+    width: 64px;
+    height: 64px;
+  }
   .trace-ctrls {
     position: absolute;
     right: 12px;
@@ -1388,6 +1593,19 @@ button:active {
   }
   .summary {
     gap: 8px;
+  }
+  .summary {
+    position: relative;
+  }
+  .boss-result {
+    position: absolute;
+    left: 20px;
+    top: 10px;
+    font-size: 44px;
+  }
+  .modal-art {
+    width: min(50vh, 220px);
+    height: min(50vh, 220px);
   }
   .emotion {
     width: 54px;

@@ -1,9 +1,12 @@
+import type { Screen } from "./router";
 import { go } from "./router";
 import { home } from "./home";
 import { rest } from "./rest";
-import { roundScreen } from "./round";
+import { bossScreen, roundScreen } from "./round";
+import { story } from "./story";
 import { h, wait } from "../games/common";
 import { countKnown, persist, playBlock, ROUNDS_PER_SESSION, save, todayKey } from "../core/store";
+import { dev } from "../core/dev";
 import { sfx } from "../core/audio";
 
 export interface RoundResult {
@@ -13,15 +16,25 @@ export interface RoundResult {
   prevBest: number;
   isRecord: boolean;
   newlyKnown: number;
+  boss: boolean;
+  bossWon?: boolean;
 }
 
 const EMOTIONS = ["😄", "🙂", "😐", "😕"];
+const STORY_EVERY = 5;
 
-/** Tur sonu: 1-3 yıldız, kişisel rekor çubuğu, bu hafta +N pofuduk, duygu seçimi. */
+/** Tur sonu: 1-3 yıldız, kişisel rekor çubuğu, bu hafta +N pofuduk, duygu seçimi. Patron sonucu varsa taç. */
 export async function summary(root: HTMLElement, r: RoundResult): Promise<void> {
   const p = save.profile!;
   const wrap = h("div", "screen summary");
 
+  // Her 5 turda bir (normal turlarda) hikâye parçası araya girer.
+  const storyDue = !r.boss && (dev.allGames || (p.rounds > 0 && p.rounds % STORY_EVERY === 0));
+  const via = (dest: Screen): Screen => (storyDue ? story(dest) : dest);
+
+  if (r.boss) {
+    wrap.append(h("div", "boss-result " + (r.bossWon ? "won" : "lost"), r.bossWon ? "👑" : "💪"));
+  }
   const starRow = h("div", "stars");
   const starEls = [1, 2, 3].map(() => h("span", "star", "☆"));
   starRow.append(...starEls);
@@ -39,13 +52,14 @@ export async function summary(root: HTMLElement, r: RoundResult): Promise<void> 
   const buttons = h("div", "summary-btns hidden");
   const homeBtn = h("button", "btn-big", "🏠");
   homeBtn.type = "button";
-  homeBtn.onclick = () => go(home);
-  const again = h("button", "btn-big play", "▶");
+  homeBtn.onclick = () => go(via(home));
+  const again = h("button", "btn-big play", r.boss && !r.bossWon ? "👑" : "▶");
   again.type = "button";
   again.onclick = () => {
     sfx.pop();
     if (save.day.roundsInSession >= ROUNDS_PER_SESSION) go(rest);
-    else go(roundScreen);
+    else if (r.boss && !r.bossWon) go(bossScreen);
+    else go(via(roundScreen));
   };
   buttons.append(homeBtn);
   if (!playBlock()) buttons.append(again);
@@ -68,6 +82,7 @@ export async function summary(root: HTMLElement, r: RoundResult): Promise<void> 
   root.append(wrap);
 
   // Animasyonlar
+  if (r.boss && r.bossWon) sfx.win();
   for (let i = 0; i < r.stars; i++) {
     await wait(350);
     starEls[i].textContent = "⭐";

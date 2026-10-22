@@ -1,7 +1,7 @@
 import type { Game } from "./types";
 import { gameHeader, h, pickFor, speakerButton, wait } from "./common";
 import { spellingOf } from "../core/content";
-import { sfx, speak } from "../core/audio";
+import { sfx, speakWord } from "../core/audio";
 import { artSvg } from "../art";
 
 /** Harflerin bu oranı boyanınca sözcük tamamlanmış sayılır. */
@@ -21,7 +21,7 @@ export const trace: Game = async (ctx) => {
     ctx.root.innerHTML = "";
     const wrap = h("div", "game trace");
     const top = h("div", "prompt-row");
-    top.append(gameHeader("✍️"), h("div", "big-art", artSvg(word)), speakerButton(word.en));
+    top.append(gameHeader("✍️"), h("div", "big-art", artSvg(word)), speakerButton(word));
     const board = h("div", "trace-board");
     const canvas = h("canvas", "trace-canvas");
     board.append(canvas);
@@ -33,7 +33,7 @@ export const trace: Game = async (ctx) => {
     ctrls.append(clear, ringEl);
     wrap.append(top, board, ctrls);
     ctx.root.append(wrap);
-    void speak(word.en);
+    void speakWord(word);
     await new Promise((r) => requestAnimationFrame(r));
 
     const dpr = Math.min(2, window.devicePixelRatio || 1);
@@ -130,7 +130,7 @@ export const trace: Game = async (ctx) => {
           sfx.ok();
           board.classList.add("ok", "pop");
           ctx.answer(word, true, Number.MAX_SAFE_INTEGER, "spell");
-          void speak(word.en);
+          void speakWord(word);
           setTimeout(resolve, 1000);
         }
       };
