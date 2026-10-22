@@ -1,0 +1,45 @@
+import type { Game } from "./types";
+import type { Word } from "../core/types";
+import { distractors, emojiCard, gameHeader, h, mark, pickFor, shuffle, speakerButton, wait } from "./common";
+import { sfx, speak } from "../core/audio";
+
+/** 👂 Dinle, doğru resme dokun. 3 soru. */
+export const listenTap: Game = async (ctx) => {
+  const words = pickFor(ctx.theme, ctx.targets, "listen", 3);
+  for (const target of words) {
+    const options = shuffle([target, ...distractors(ctx.theme, target, "listen", 3)]);
+    ctx.root.innerHTML = "";
+    const wrap = h("div", "game");
+    const top = h("div", "prompt-row");
+    const spk = speakerButton(target.en);
+    top.append(gameHeader("👂"), spk);
+    const grid = h("div", "grid4");
+    const cards = options.map(emojiCard);
+    grid.append(...cards);
+    wrap.append(top, grid);
+    ctx.root.append(wrap);
+
+    let t0 = performance.now();
+    const picked = new Promise<Word>((res) => {
+      cards.forEach((c, i) => (c.onclick = () => res(options[i])));
+    });
+    spk.classList.add("pulse");
+    let answered = false;
+    void speak(target.en).then(() => {
+      if (!answered) t0 = performance.now();
+    });
+    const choice = await picked;
+    answered = true;
+    const rt = Math.max(0, performance.now() - t0);
+    grid.classList.add("locked");
+    const ok = choice.id === target.id;
+    mark(cards[options.indexOf(choice)], ok);
+    if (ok) sfx.ok();
+    else {
+      sfx.no();
+      mark(cards[options.indexOf(target)], true);
+    }
+    ctx.answer(target, ok, rt, "listen");
+    await wait(ok ? 650 : 1100);
+  }
+};

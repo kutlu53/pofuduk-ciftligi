@@ -1,0 +1,25 @@
+{
+  "name": "pofuduk-ciftligi",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "validate": "python tools/validate.py",
+    "smoke": "node tools/smoke.mjs",
+    "shots": "node tools/shots.mjs",
+    "sheet": "node tools/sheet.mjs",
+    "art": "python tools/apply_art.py",
+    "icons": "node tools/icons.mjs"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "vite": "^6.4.5",
+    "vite-plugin-pwa": "^0.21.2"
+  },
+  "dependencies": {
+    "idb-keyval": "^6.3.0"
+  }
+}

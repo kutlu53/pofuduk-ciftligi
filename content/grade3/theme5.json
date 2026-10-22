@@ -1,0 +1,96 @@
+{
+  "id": "theme5",
+  "grade": 3,
+  "title_en": "Homes & Houses & The Neighbourhood",
+  "title_tr": "Evler ve Mahalle (Kır Hayatı)",
+  "program_url": "https://tymm.meb.gov.tr/ingilizce-dersi-temel-egitim/unite/781",
+  "subthemes": [
+    "Life in the countryside",
+    "Farmhouses and farm animals",
+    "Farm activities and chores"
+  ],
+  "words": [
+    {"id": "cow", "en": "a cow", "tr": "inek", "cat": "animals", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "🐄", "asset": {"img": null, "audio": null}},
+    {"id": "donkey", "en": "a donkey", "tr": "eşek", "cat": "animals", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "🫏", "asset": {"img": null, "audio": null}},
+    {"id": "chicken", "en": "a chicken", "tr": "tavuk", "cat": "animals", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "🐔", "asset": {"img": null, "audio": null}, "art": {"kind": "emoji", "e": "🐔"}},
+    {"id": "hen", "en": "a hen", "tr": "tavuk (dişi)", "cat": "animals", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "🐓", "asset": {"img": null, "audio": null}, "art": {"kind": "combo", "main": "🐔", "badge": "🥚"}},
+    {"id": "goat", "en": "a goat", "tr": "keçi", "cat": "animals", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "🐐", "asset": {"img": null, "audio": null}},
+    {"id": "horse", "en": "a horse", "tr": "at", "cat": "animals", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "🐴", "asset": {"img": null, "audio": null}},
+    {"id": "sheep", "en": "a sheep", "tr": "koyun", "cat": "animals", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "🐑", "asset": {"img": null, "audio": null}},
+    {"id": "duck", "en": "a duck", "tr": "ördek", "cat": "animals", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "🦆", "asset": {"img": null, "audio": null}},
+    {"id": "turkey", "en": "a turkey", "tr": "hindi", "cat": "animals", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "🦃", "asset": {"img": null, "audio": null}},
+    {"id": "rabbit", "en": "a rabbit", "tr": "tavşan", "cat": "animals", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "🐰", "asset": {"img": null, "audio": null}},
+
+    {"id": "farmhouse", "en": "a farmhouse", "tr": "çiftlik evi", "cat": "houses", "modes": ["listen", "read", "match", "say"], "emoji": "🏡", "asset": {"img": null, "audio": null}},
+    {"id": "cottage", "en": "a cottage", "tr": "kır evi", "cat": "houses", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "🛖", "asset": {"img": null, "audio": null}},
+    {"id": "barn", "en": "a barn", "tr": "ahır", "cat": "houses", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "🏚️", "asset": {"img": null, "audio": null}},
+
+    {"id": "village", "en": "a village", "tr": "köy", "cat": "countryside", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "🏘️", "asset": {"img": null, "audio": null}, "art": {"kind": "draw", "name": "village"}},
+    {"id": "farm", "en": "a farm", "tr": "çiftlik", "cat": "countryside", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "🌾", "asset": {"img": null, "audio": null}, "art": {"kind": "combo", "main": "🏡", "badge": "🐄"}},
+    {"id": "field", "en": "a field", "tr": "tarla", "cat": "countryside", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "🌄", "asset": {"img": null, "audio": null}, "art": {"kind": "draw", "name": "field"}},
+    {"id": "tractor", "en": "a tractor", "tr": "traktör", "cat": "countryside", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "🚜", "asset": {"img": null, "audio": null}},
+    {"id": "grass", "en": "grass", "tr": "çimen", "cat": "countryside", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "🌿", "asset": {"img": null, "audio": null}},
+    {"id": "plant", "en": "a plant", "tr": "bitki", "cat": "countryside", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "🌱", "asset": {"img": null, "audio": null}},
+
+    {"id": "feed", "en": "to feed", "tr": "beslemek", "cat": "chores", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "🥣", "asset": {"img": null, "audio": null}, "art": {"kind": "combo", "main": "🥣", "badge": "🐔"}},
+    {"id": "bake", "en": "to bake", "tr": "fırında pişirmek", "cat": "chores", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "🍞", "asset": {"img": null, "audio": null}, "art": {"kind": "combo", "main": "🍞", "badge": "🔥"}},
+    {"id": "water_v", "en": "to water", "tr": "sulamak", "cat": "chores", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "💧", "asset": {"img": null, "audio": null}, "art": {"kind": "combo", "main": "🌱", "badge": "💧"}},
+    {"id": "milk_v", "en": "to milk", "tr": "sağmak", "cat": "chores", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "🥛", "asset": {"img": null, "audio": null}, "art": {"kind": "combo", "main": "🐄", "badge": "🥛"}},
+    {"id": "garden_v", "en": "to garden", "tr": "bahçe işi yapmak", "cat": "chores", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "🧑‍🌾", "asset": {"img": null, "audio": null}, "art": {"kind": "combo", "main": "🧑‍🌾", "badge": "🌷"}},
+    {"id": "plant_v", "en": "to plant", "tr": "ekmek, dikmek", "cat": "chores", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "🪴", "asset": {"img": null, "audio": null}, "art": {"kind": "combo", "main": "🌱", "badge": "🤲"}},
+    {"id": "grow", "en": "to grow", "tr": "yetiştirmek", "cat": "chores", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "🌻", "asset": {"img": null, "audio": null}, "art": {"kind": "combo", "main": "🌻", "badge": "📈"}},
+    {"id": "collect_eggs", "en": "to collect eggs", "tr": "yumurta toplamak", "cat": "chores", "modes": ["listen", "read", "match", "say"], "emoji": "🥚", "asset": {"img": null, "audio": null}, "art": {"kind": "combo", "main": "🧺", "badge": "🥚"}}
+  ],
+  "chunks": [
+    {"id": "c01", "en": "What is there on your farm? There's a farmhouse on our farm.", "tr": "Çiftliğinizde ne var? Bir çiftlik evi var.", "skills": ["L", "R", "G"]},
+    {"id": "c02", "en": "How many cows are there on your farm? There are five cows.", "tr": "Çiftliğinizde kaç inek var? Beş inek var.", "skills": ["L", "R", "W"]},
+    {"id": "c03", "en": "What do you do on your farm every day? I milk our cows every day.", "tr": "Her gün çiftlikte ne yaparsın? İneklerimizi sağarım.", "skills": ["L", "S", "R"]},
+    {"id": "c04", "en": "What is the farmer doing now? He's watering the vegetables now.", "tr": "Çiftçi şimdi ne yapıyor? Sebzeleri suluyor.", "skills": ["L", "R", "G"]}
+  ],
+  "social": [
+    {"en": "No way!", "tr": "Olamaz!"},
+    {"en": "No idea.", "tr": "Hiç fikrim yok."},
+    {"en": "Fantastic!", "tr": "Muhteşem!"},
+    {"en": "Help me!", "tr": "Yardım et!"},
+    {"en": "Why not?", "tr": "Neden olmasın?"},
+    {"en": "What a surprise!", "tr": "Ne sürpriz!"},
+    {"en": "How beautiful!", "tr": "Ne kadar güzel!"},
+    {"en": "Let me...", "tr": "İzin ver ..."},
+    {"en": "Cute!", "tr": "Şirin!"}
+  ],
+  "phonics": [
+    "q",
+    "r",
+    "s",
+    "t",
+    "v"
+  ],
+  "performance": {
+    "title_tr": "Kır evleri broşürü",
+    "steps_tr": [
+      "Kır evleri, hayvanlar ve etkinlikleri tanıtan bir broşür hazırla.",
+      "Sınıfa sun."
+    ]
+  },
+  "outcome_tags": [
+    "L1",
+    "L2",
+    "L3",
+    "L4",
+    "R1",
+    "R2",
+    "R3",
+    "R4",
+    "S1",
+    "S2",
+    "S3",
+    "S4",
+    "S5",
+    "S6",
+    "W1",
+    "W2",
+    "P1",
+    "V1",
+    "G1"
+  ]
+}

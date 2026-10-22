@@ -1,0 +1,102 @@
+{
+  "id": "theme6",
+  "grade": 3,
+  "title_en": "Life in the City & the World",
+  "title_tr": "Şehir ve Dünya Hayatı (Yeme-İçme)",
+  "program_url": "https://tymm.meb.gov.tr/ingilizce-dersi-temel-egitim/unite/782",
+  "subthemes": [
+    "Food items and meals",
+    "Eating outside and ordering"
+  ],
+  "words": [
+    {"id": "breakfast", "en": "breakfast", "tr": "kahvaltı", "cat": "meals", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "🍳", "asset": {"img": null, "audio": null}, "art": {"kind": "combo", "main": "🥣", "badge": "🌅"}},
+    {"id": "lunch", "en": "lunch", "tr": "öğle yemeği", "cat": "meals", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "🍱", "asset": {"img": null, "audio": null}, "art": {"kind": "combo", "main": "🍱", "badge": "☀️"}},
+    {"id": "dinner", "en": "dinner", "tr": "akşam yemeği", "cat": "meals", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "🍽️", "asset": {"img": null, "audio": null}, "art": {"kind": "combo", "main": "🍽️", "badge": "🌙"}},
+
+    {"id": "water", "en": "water", "tr": "su", "cat": "food", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "💧", "asset": {"img": null, "audio": null}},
+    {"id": "milk", "en": "milk", "tr": "süt", "cat": "food", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "🥛", "asset": {"img": null, "audio": null}},
+    {"id": "tea", "en": "tea", "tr": "çay", "cat": "food", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "🍵", "asset": {"img": null, "audio": null}},
+    {"id": "bread", "en": "bread", "tr": "ekmek", "cat": "food", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "🍞", "asset": {"img": null, "audio": null}},
+    {"id": "juice", "en": "juice", "tr": "meyve suyu", "cat": "food", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "🧃", "asset": {"img": null, "audio": null}},
+    {"id": "cheese", "en": "cheese", "tr": "peynir", "cat": "food", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "🧀", "asset": {"img": null, "audio": null}},
+    {"id": "cake", "en": "cake", "tr": "pasta", "cat": "food", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "🍰", "asset": {"img": null, "audio": null}},
+    {"id": "butter", "en": "butter", "tr": "tereyağı", "cat": "food", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "🧈", "asset": {"img": null, "audio": null}},
+    {"id": "pasta", "en": "pasta", "tr": "makarna", "cat": "food", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "🍝", "asset": {"img": null, "audio": null}},
+    {"id": "soup", "en": "soup", "tr": "çorba", "cat": "food", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "🍲", "asset": {"img": null, "audio": null}},
+    {"id": "rice", "en": "rice", "tr": "pilav", "cat": "food", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "🍚", "asset": {"img": null, "audio": null}},
+    {"id": "salad", "en": "salad", "tr": "salata", "cat": "food", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "🥗", "asset": {"img": null, "audio": null}},
+    {"id": "sandwich", "en": "a sandwich", "tr": "sandviç", "cat": "food", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "🥪", "asset": {"img": null, "audio": null}},
+    {"id": "pancake", "en": "a pancake", "tr": "krep", "cat": "food", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "🥞", "asset": {"img": null, "audio": null}},
+    {"id": "toast", "en": "a toast", "tr": "tost", "cat": "food", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "🍞", "asset": {"img": null, "audio": null}, "art": {"kind": "draw", "name": "toast"}},
+    {"id": "olive", "en": "an olive", "tr": "zeytin", "cat": "food", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "🫒", "asset": {"img": null, "audio": null}},
+
+    {"id": "fast_food", "en": "fast food", "tr": "hızlı yemek", "cat": "eating_out", "modes": ["listen", "read", "match", "say"], "emoji": "🍔", "asset": {"img": null, "audio": null}},
+    {"id": "takeaway", "en": "takeaway", "tr": "paket servis", "cat": "eating_out", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "🥡", "asset": {"img": null, "audio": null}},
+    {"id": "restaurant", "en": "a restaurant", "tr": "restoran", "cat": "eating_out", "modes": ["listen", "read", "match", "say"], "emoji": "🍴", "asset": {"img": null, "audio": null}, "art": {"kind": "draw", "name": "restaurant"}},
+    {"id": "cafe", "en": "a cafe", "tr": "kafe", "cat": "eating_out", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "☕", "asset": {"img": null, "audio": null}},
+    {"id": "bill", "en": "a bill", "tr": "hesap", "cat": "eating_out", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "🧾", "asset": {"img": null, "audio": null}},
+    {"id": "waiter", "en": "a waiter", "tr": "garson (erkek)", "cat": "eating_out", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "🤵", "asset": {"img": null, "audio": null}},
+    {"id": "waitress", "en": "a waitress", "tr": "garson (kadın)", "cat": "eating_out", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "💁‍♀️", "asset": {"img": null, "audio": null}},
+    {"id": "menu", "en": "a menu", "tr": "menü", "cat": "eating_out", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "📋", "asset": {"img": null, "audio": null}},
+
+    {"id": "eat", "en": "to eat", "tr": "yemek", "cat": "verbs", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "😋", "asset": {"img": null, "audio": null}, "art": {"kind": "combo", "main": "😋", "badge": "🍽️"}},
+    {"id": "drink", "en": "to drink", "tr": "içmek", "cat": "verbs", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "🥤", "asset": {"img": null, "audio": null}, "art": {"kind": "combo", "main": "🥤", "badge": "😋"}},
+    {"id": "order", "en": "to order", "tr": "sipariş vermek", "cat": "verbs", "modes": ["listen", "read", "match", "spell", "say"], "emoji": "🙋", "asset": {"img": null, "audio": null}, "art": {"kind": "combo", "main": "🙋", "badge": "📋"}},
+    {"id": "have", "en": "to have", "tr": "sahip olmak / yemek", "cat": "verbs", "modes": ["read", "spell", "say"], "emoji": "🤲", "asset": {"img": null, "audio": null}, "art": {"kind": "combo", "main": "🤲", "badge": "🍎"}},
+    {"id": "want", "en": "to want", "tr": "istemek", "cat": "verbs", "modes": ["read", "spell", "say"], "emoji": "🙏", "asset": {"img": null, "audio": null}, "art": {"kind": "combo", "main": "🙏", "badge": "🍦"}}
+  ],
+  "chunks": [
+    {"id": "c01", "en": "What do you want? I want some salad, please.", "tr": "Ne istersin? Biraz salata istiyorum lütfen.", "skills": ["L", "S", "W"]},
+    {"id": "c02", "en": "I'll take some fruit, please.", "tr": "Biraz meyve alayım lütfen.", "skills": ["S", "W"]},
+    {"id": "c03", "en": "Can I have some soup, please? Yes, you can.", "tr": "Biraz çorba alabilir miyim? Evet.", "skills": ["L", "S", "R"]},
+    {"id": "c04", "en": "Can I see the menu, please? Yes, of course.", "tr": "Menüyü görebilir miyim? Elbette.", "skills": ["L", "S", "R"]},
+    {"id": "c05", "en": "Have you got any olives? Yes, I've got some olives.", "tr": "Zeytinin var mı? Evet, biraz var.", "skills": ["L", "R", "G"]},
+    {"id": "c06", "en": "What have you got for lunch? We've got some bread.", "tr": "Öğle yemeği için ne var? Biraz ekmek var.", "skills": ["L", "R"]}
+  ],
+  "social": [
+    {"en": "Dinner is ready!", "tr": "Yemek hazır!"},
+    {"en": "What's for breakfast?", "tr": "Kahvaltıda ne var?"},
+    {"en": "I am full.", "tr": "Doydum."},
+    {"en": "Enjoy your meal!", "tr": "Afiyet olsun!"},
+    {"en": "Lunch time!", "tr": "Öğle yemeği zamanı!"},
+    {"en": "Pass me the salt, please.", "tr": "Tuzu uzatır mısın lütfen."},
+    {"en": "Here you are.", "tr": "Buyurun."},
+    {"en": "Thank you!", "tr": "Teşekkürler!"}
+  ],
+  "phonics": [
+    "u",
+    "w",
+    "x",
+    "y",
+    "z"
+  ],
+  "performance": {
+    "title_tr": "Restoran / kafe menüsü",
+    "steps_tr": [
+      "Kahvaltı, öğle, akşam bölümleri ve içeceklerle bir menü hazırla.",
+      "Sipariş diyalogları yaz.",
+      "Restoranda çalışıyormuş gibi sınıfa sun."
+    ]
+  },
+  "outcome_tags": [
+    "L1",
+    "L2",
+    "L3",
+    "L4",
+    "R1",
+    "R2",
+    "R3",
+    "R4",
+    "S1",
+    "S2",
+    "S3",
+    "S4",
+    "S5",
+    "S6",
+    "W1",
+    "W2",
+    "P1",
+    "V1",
+    "G1"
+  ]
+}
